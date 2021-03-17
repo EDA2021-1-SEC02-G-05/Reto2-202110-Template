@@ -31,8 +31,87 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 
+def initdicci(lista):
+    """
+    Llama la funcion de inicializacion del catalogo del modelo.
+    """
+    diccio = model.newdicc(lista)
+    return diccio
+
 # Funciones para la carga de datos
+
+def loadData(dicci):
+    """
+    Carga los datos de los archivos y cargar los datos en la
+    estructura de datos
+    """
+    loadVideos(dicci)
+    loadCategorias(dicci)
+
+def loadVideos(dicci):
+    """
+    Carga los libros del archivo.  Por cada libro se toman sus autores y por
+    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
+    referencia al libro que se esta procesando.
+    """
+    videofile = cf.data_dir + 'videos-large.csv'
+    input_file = csv.DictReader(open(videofile, encoding='utf-8'))
+    for video in input_file:
+        model.addVideo(dicci, video)
+
+
+def loadCategorias(dicci):
+    """
+    Carga todos los tags del archivo y los agrega a la lista de tags
+    """
+    Categoryfile = cf.data_dir + 'category-id.csv'
+    input_file = csv.DictReader(open(Categoryfile, encoding='utf-8'))
+    for category in input_file:
+        model.addCategoria(dicci, category)
+   
 
 # Funciones de ordenamiento
 
+def loadOrdenamientos(tipo,dicci,size):
+    rta = model.Ordenamientos(tipo,dicci,size)
+    return rta
+
 # Funciones de consulta sobre el catálogo
+
+def loadppaises(dicci):
+
+    rttaa = model.paises(dicci)
+
+    return rttaa
+
+
+
+def loadrequerimiento1(dicci,ppais,categorias,cantidad):
+
+    jes=model.requerimiento1(dicci,ppais,categorias,cantidad)
+
+    return jes 
+
+def loadTrendingVideo(dicci,pais):
+
+    ta=model.TrendingVideo(dicci,pais)
+
+    return ta
+
+
+def loadrequerimiento3(dicci,categorii):
+
+    uu=model.requerimiento3(dicci,categorii)
+
+    return uu
+def loadorganizartags(dicci):
+
+    opo=model.organizartags(dicci)
+
+    return opo
+
+def loadrequerimiento4(dicci,tag,numero):
+
+    pomona=model.requerimiento4(dicci,tag,numero)
+
+    return pomona
