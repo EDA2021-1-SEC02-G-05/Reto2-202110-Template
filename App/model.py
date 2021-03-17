@@ -48,41 +48,26 @@ los mismos.
 
 def newdicc(lista: str):
  
-    diccio = {'books': None,
-               'bookIds': None,
-               'authors': None,
-               'tags': None,
-               'tagIds': None,
-               'years': None}
+    diccio = {'videos': None,
+               'categorias': None,
+               }
 
 
-    diccio['books'] = lt.newList('SINGLE_LINKED', compareBookIds)
+    diccio['videos'] = lt.newList('SINGLE_LINKED', compareBookIds)
 
  
-    diccio['bookIds'] = mp.newMap(10000,
+    diccio['categorias'] = mp.newMap(10000,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareMapBookIds)
 
-    diccio['authors'] = mp.newMap(800,
+    diccio['paises'] = mp.newMap(800,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareAuthorsByName)
    
-    diccio['tags'] = mp.newMap(34500,
-                                maptype='PROBING',
-                                loadfactor=0.5,
-                                comparefunction=compareTagNames)
-   
-    diccio['tagIds'] = mp.newMap(34500,
-                                  maptype='CHAINING',
-                                  loadfactor=4.0,
-                                  comparefunction=compareTagIds)
     
-    diccio['years'] = mp.newMap(40,
-                                 maptype='PROBING',
-                                 loadfactor=0.5,
-                                 comparefunction=compareMapYear)
+   
 
     return diccio
 
