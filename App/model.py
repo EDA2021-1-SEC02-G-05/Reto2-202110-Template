@@ -92,7 +92,6 @@ def videosLikes(diccio, videos):
         par = mp.get(diccio['categorias'], categorias)
         lis = me.getValue(par)
         lis = me.getValue(cmpbylikes(videos["likes"],videos["likes"]))
-           
     else:
         lis = lt.newList()
         mp.put(diccio['categorias'], categorias,lis)
