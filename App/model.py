@@ -46,43 +46,58 @@ los mismos.
 # Construccion de modelos
 
 
-def newdicc(lista: str):
+def newdicc(tipo):
  
     diccio = {'videos': None,
                'categorias': None,
                }
 
 
-    diccio['videos'] = lt.newList('SINGLE_LINKED', compareBookIds)
+    diccio['videos'] = lt.newList(tipo)
 
  
     diccio['categorias'] = mp.newMap(10000,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
-                                   comparefunction=compareMapBookIds)
-
-    diccio['paises'] = mp.newMap(800,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
-                                   comparefunction=compareAuthorsByName)
-   
-    
-   
+                                   )
 
     return diccio
 
 
 
 # Funciones para agregar informacion al catalogo
-def addVideo(dicci, video):
+
+def addVideo(diccio, video):
     # Se adiciona el video a la lista de videos
-    lt.addLast(dicci['videos'], video)
+    lt.addLast(diccio['videos'], video)
 
 
+def addCategoria(diccio, videos):
+    categorias = videos["category_id"]
+    x = mp.contains(diccio["categorias"],categorias)
+    if x:
+        par = mp.get(diccio['categorias'], categorias)
+        lis = me.getValue(par)
+        
+    else:
+        lis = lt.newList()
+        mp.put(diccio['categorias'], categorias,lis)
 
-def addCategoria(dicci, categoria):
-    # Se adiciona la categoria a la lista de categorias
-    lt.addLast(dicci['categorias'], categoria)
+    lt.addLast(lis,videos)
+
+def videosLikes(diccio, videos):
+    categorias = videos["category_id"]
+    x = mp.contains(diccio["categorias"],categorias)
+    if x:
+        par = mp.get(diccio['categorias'], categorias)
+        lis = me.getValue(par)
+        lis = me.getValue(cmpbylikes(videos["likes"],videos["likes"]))
+           
+    else:
+        lis = lt.newList()
+        mp.put(diccio['categorias'], categorias,lis)
+
+    lt.addLast(lis,videos)
 
 
 
@@ -105,7 +120,7 @@ def cmpCategoriesByTrending(cat1, cat2):
 
     return (float(cat1['title']) > float(cat2['title']))
 
-def cmpPaisesbylikes(lili1,lili2):
+def cmpbylikes(lili1,lili2):
 
     return(float(lili1["likes"])>float(lili2["likes"]))
 

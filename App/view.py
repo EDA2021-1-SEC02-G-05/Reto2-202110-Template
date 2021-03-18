@@ -50,11 +50,11 @@ def printMenu():
     print("8- Consultar los videos por un tag")
     print("0- Salir")
 
-def initdicci(lista:str):
+def initdicci(tipo):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initdicci(lista)
+    return controller.initdicci(tipo)
 
 def loadData(dicci):
     """

@@ -31,24 +31,24 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 
-def initdicci(lista):
+def initdicci(tipo):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    diccio = model.newdicc(lista)
+    diccio = model.newdicc(tipo)
     return diccio
 
 # Funciones para la carga de datos
 
-def loadData(dicci):
+def loadData(diccio):
     """
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
-    loadVideos(dicci)
-    loadCategorias(dicci)
+    loadVideos(diccio)
+    loadCategorias(diccio)
 
-def loadVideos(dicci):
+def loadVideos(diccio):
     """
     Carga los libros del archivo.  Por cada libro se toman sus autores y por
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
@@ -57,17 +57,17 @@ def loadVideos(dicci):
     videofile = cf.data_dir + 'videos-large.csv'
     input_file = csv.DictReader(open(videofile, encoding='utf-8'))
     for video in input_file:
-        model.addVideo(dicci, video)
+        model.addVideo(diccio, video)
+        model.addCategoria(diccio,video)
 
-
-def loadCategorias(dicci):
+def loadCategorias(diccio):
     """
     Carga todos los tags del archivo y los agrega a la lista de tags
     """
     Categoryfile = cf.data_dir + 'category-id.csv'
     input_file = csv.DictReader(open(Categoryfile, encoding='utf-8'))
     for category in input_file:
-        model.addCategoria(dicci, category)
+        model.addCategoria(diccio, category)
    
 
 # Funciones de ordenamiento
