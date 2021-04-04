@@ -25,6 +25,8 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
+from DISClib.DataStructures import mapentry as me
+
 assert cf
 import sys
 
@@ -67,6 +69,10 @@ def loadaddcategoria(diccio):
 
     return controller.loadaddcategoria(diccio)
 
+def loaddloadvideosLikes(diccio,numero,categor):
+
+    return controller.loadvideosLikes(diccio,numero,categor)
+
 diccio = None
 """
 Menu principal
@@ -91,12 +97,18 @@ while True:
 
         pepe=loadaddcategoria(diccio)
 
-        
+        print(" Se han organizado los videos por categorias ")
 
-        
+    elif int(inputs[0]) == 3:  
 
-        print(mp.get(pepe["categorias"],"28"))
+        nn=int(input(" Ingrese la cantidad de videos para ver: "))
+        categor=str(input(" Ingrese el nombre de la categoria: "))
+        jes=loaddloadvideosLikes(diccio,nn,categor)
 
+        print(jes)
+
+
+    
 
 
         

@@ -65,3 +65,11 @@ def loadVideos(diccio):
 def loadaddcategoria(diccio):
     agustinjulio=model.addCategoria(diccio)
     return agustinjulio
+
+
+def loadvideosLikes(diccio,numero,categor):
+
+    omarperez=model.videosLikes(diccio,numero,categor)
+
+    return omarperez
+
