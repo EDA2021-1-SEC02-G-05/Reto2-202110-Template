@@ -36,6 +36,7 @@ from DISClib.Algorithms.Sorting import selectionsort as sel
 from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import mergesort as mg
 from DISClib.Algorithms.Sorting import quicksort as qk
+from DISClib.DataStructures import listiterator as it
 assert cf
 
 """
@@ -54,7 +55,6 @@ def newdicc(tipo):
 
 
     diccio['videos'] = lt.newList(tipo)
-
  
     diccio['categorias'] = mp.newMap(10000,
                                    maptype='CHAINING',
@@ -72,31 +72,56 @@ def addVideo(diccio, video):
     lt.addLast(diccio['videos'], video)
 
 
-def addCategoria(diccio, videos):
-    categorias = videos["category_id"]
-    x = mp.contains(diccio["categorias"],categorias)
-    if x:
-        par = mp.get(diccio['categorias'], categorias)
-        lis = me.getValue(par)
+
+
+def addCategoria(diccio):
+
+
+    for m in range(0,lt.size(diccio["videos"])):
+        rta=lt.getElement(diccio["videos"],m)
+
+        rta["category_id"]
+
+
+        if mp.contains(diccio["categorias"],rta["category_id"])== True:
+         
+            par = mp.get(diccio['categorias'], rta["category_id"])
+            lis = me.getValue(par)
+
+            lt.addLast(lis,rta)
+            mg.sort(lis,cmpbylikes)
         
-    else:
-        lis = lt.newList()
-        mp.put(diccio['categorias'], categorias,lis)
+        else:
+            lis = lt.newList()
+            mp.put(diccio['categorias'],rta["category_id"],lis)
+            lt.addLast(lis,rta)
 
-    lt.addLast(lis,videos)
+    return diccio        
 
-def videosLikes(diccio, videos):
-    categorias = videos["category_id"]
-    x = mp.contains(diccio["categorias"],categorias)
-    if x:
-        par = mp.get(diccio['categorias'], categorias)
-        lis = me.getValue(par)
-        lis = me.getValue(cmpbylikes(videos["likes"],videos["likes"]))
-    else:
-        lis = lt.newList()
-        mp.put(diccio['categorias'], categorias,lis)
 
-    lt.addLast(lis,videos)
+
+
+
+
+
+
+
+
+def videosLikes(diccio,categoria):
+
+
+
+    mp.get(diccio["categorias"],str(categoria))
+
+    
+
+
+
+
+
+
+
+
 
 
 

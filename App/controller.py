@@ -46,7 +46,7 @@ def loadData(diccio):
     estructura de datos
     """
     loadVideos(diccio)
-    loadCategorias(diccio)
+ 
 
 def loadVideos(diccio):
     """
@@ -54,64 +54,14 @@ def loadVideos(diccio):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    videofile = cf.data_dir + 'videos-large.csv'
+    videofile = cf.data_dir + 'videos-small.csv'
     input_file = csv.DictReader(open(videofile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(diccio, video)
-        model.addCategoria(diccio,video)
-
-def loadCategorias(diccio):
-    """
-    Carga todos los tags del archivo y los agrega a la lista de tags
-    """
-    Categoryfile = cf.data_dir + 'category-id.csv'
-    input_file = csv.DictReader(open(Categoryfile, encoding='utf-8'))
-    for category in input_file:
-        model.addCategoria(diccio, category)
    
-
-# Funciones de ordenamiento
-
-def loadOrdenamientos(tipo,dicci,size):
-    rta = model.Ordenamientos(tipo,dicci,size)
-    return rta
 
 # Funciones de consulta sobre el catálogo
 
-def loadppaises(dicci):
-
-    rttaa = model.paises(dicci)
-
-    return rttaa
-
-
-
-def loadrequerimiento1(dicci,ppais,categorias,cantidad):
-
-    jes=model.requerimiento1(dicci,ppais,categorias,cantidad)
-
-    return jes 
-
-def loadTrendingVideo(dicci,pais):
-
-    ta=model.TrendingVideo(dicci,pais)
-
-    return ta
-
-
-def loadrequerimiento3(dicci,categorii):
-
-    uu=model.requerimiento3(dicci,categorii)
-
-    return uu
-def loadorganizartags(dicci):
-
-    opo=model.organizartags(dicci)
-
-    return opo
-
-def loadrequerimiento4(dicci,tag,numero):
-
-    pomona=model.requerimiento4(dicci,tag,numero)
-
-    return pomona
+def loadaddcategoria(diccio):
+    agustinjulio=model.addCategoria(diccio)
+    return agustinjulio

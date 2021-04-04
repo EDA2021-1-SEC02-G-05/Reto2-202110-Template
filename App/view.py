@@ -24,6 +24,7 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.ADT import map as mp
 assert cf
 import sys
 
@@ -56,41 +57,17 @@ def initdicci(tipo):
     """
     return controller.initdicci(tipo)
 
-def loadData(dicci):
+def loadData(diccio):
     """
     Carga los libros en la estructura de datos
     """
-    controller.loadData(dicci)
+    controller.loadData(diccio)
 
-def loadOrdenamientos(tipo,dicci,size):
+def loadaddcategoria(diccio):
 
-    return controller.loadOrdenamientos(tipo,dicci,size)
+    return controller.loadaddcategoria(diccio)
 
-def loadpaises(dicci):
-
-    return controller.loadppaises(dicci)
-
-
-
-def loadtrendingVideo(dicci,pais):
-
-    return controller.loadTrendingVideo(dicci,pais)
-
-def loaddrequerimiento1(dicci,ppais,categorias,cantidad):
-
-    return controller.loadrequerimineto1(dicci,ppais,categorias,cantidad)
-
-def loaddrequerimiento3(dicci,categorii):
-    return controller.loadrequerimiento3(dicci,categorii)
-
-def loaddorganizartags(dicci):
-    return controller.loadorganizartags(dicci)
-
-def loaddrequerimiento4(dicci,tag,numero):
-    return controller.loadrequerimiento4(dicci,tag,numero)
-
-
-dicci = None
+diccio = None
 """
 Menu principal
 """
@@ -101,79 +78,26 @@ while True:
         print("Cargando información de los archivos ....")
 
         x = str(input("Indique el tipo de lista que quiere: "))
-        dicci = initdicci(x)
-        loadData(dicci)
-        primer= lt.firstElement(dicci["videos"])
+        diccio = initdicci(x)
+        loadData(diccio)
+        primer= lt.firstElement(diccio["videos"])
         lista=[]
-        categor= dicci["categorias"]["elements"]
-        print('Videos cargados: ' + str(lt.size(dicci['videos'])))
-        print('Categorias cargadas: ' + str(lt.size(dicci['categorias'])))
-        print("el primer video: "+" Titulo : "+str(primer["title"])+" , "+" Nombre del canal:  "+str(primer["channel_title"])+" , "+" Fecha de tendencia: "+str(primer["trending_date"])+" , " +" Pais: "+str(primer["country"])+" , "  + " Vistas: "+str(primer["views"])+" , "+"  Me gustas: "+str(primer["likes"])+", "+ "Nomegustas :"+str(primer["dislikes"]))
-        for i in categor:
-             for t  in i:
-                 hol=str(i[t])
-                 lista.append((hol[0:2],hol[4:]))
-        print(" Lista de categorias : "+ str(lista))  
+        print('Videos cargados: ' + str(lt.size(diccio['videos'])))
+    
+        print("el primer video: "+" Titulo : "+str(primer["title"])+" , "+" Nombre del canal:  "+str(primer["channel_title"])+" , "+" Fecha de tendencia: "+str(primer["trending_date"])+" , " +" Pais: "+str(primer["country"])+" , "  + " Vistas: "+str(primer["category_id"])+" , "+"  Me gustas: "+str(primer["likes"])+", "+ "Nomegustas :"+str(primer["dislikes"]))
+
 
     elif int(inputs[0]) == 2:   
+
+        pepe=loadaddcategoria(diccio)
+
         
-        ordenamiento = str(input("Indique el tipo de ordenamiento que quiere utilizar(merge,quick,shell,selection,insertion): "))
-        size = int(input("Indique el tamaño de la muestra: "))
-        resultado = controller.loadOrdenamientos(str(ordenamiento),dicci,size)    
-        print("Para el ordenamiento" + str(ordenamiento)+ ", el tiempo (mseg) es: "+ str(resultado[1]))
 
-    elif int(inputs[0]) == 3: 
+        
 
-        loadpaises(dicci)
-        print(" Se han organizado los videos por sus paises correspondientes ")
+        print(mp.get(pepe["categorias"],"28"))
 
 
-
-    elif  int(inputs[0]) == 4:
-
-        ppais=str(input("Ingrese el nombre del pais interesado:  "))
-        categorias=str(input("Ingrese el nombre de la categoria deseada: "))
-        cantidad=int(input("Ingrese la cantidad de videos deseada: "))
-
-    
-
-        jes= loaddrequerimiento1(dicci,ppais,categorias,cantidad)
-
-        print(jes)
-
-    elif  int(inputs[0]) == 5:
-        ppaais=str(input("Ingrese el pais a buscar: "))
-
-
-        te=loadtrendingVideo(dicci,ppaais)
-
-        print(te)
-
-    elif  int(inputs[0]) == 6:
-        ctt=str(input("Ingrese la categoria deseada: "))
-
-        print("El video de la mas trending en la categoria "+str(ctt)+":")
-
-
-        jm=loaddrequerimiento3(dicci,ctt)
-
-        print(jm)
-
-
-    elif  int(inputs[0]) == 7:
-
-        tutu=loaddorganizartags(dicci)
-
-        print("Se organizaron los videos con sus respectivos Tags")
-
-    elif int(inputs[0]) == 8:
-
-        tag=str(input("Ingrese el nombre del Tag de su interes: "))
-        numero=int(input("Ingrese la cantidad de videos que desea ver: "))
-
-        cachondo=loaddrequerimiento4(dicci,tag,numero)
-
-        print(cachondo)
 
         
 
