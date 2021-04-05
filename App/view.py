@@ -88,9 +88,13 @@ while True:
         loadData(diccio)
         primer= lt.firstElement(diccio["videos"])
         lista=[]
+        answer = controller.loadData(diccio)
         print('Videos cargados: ' + str(lt.size(diccio['videos'])))
-    
         print("el primer video: "+" Titulo : "+str(primer["title"])+" , "+" Nombre del canal:  "+str(primer["channel_title"])+" , "+" Fecha de tendencia: "+str(primer["trending_date"])+" , " +" Pais: "+str(primer["country"])+" , "  + " Vistas: "+str(primer["category_id"])+" , "+"  Me gustas: "+str(primer["likes"])+", "+ "Nomegustas :"+str(primer["dislikes"]))
+
+        print("Tiempo [ms]: ", f"{answer[0]:.3f}", " || ",
+        "Memoria [kB]: ", f"{answer[1]:.3f}")
+
 
 
     elif int(inputs[0]) == 2:   
