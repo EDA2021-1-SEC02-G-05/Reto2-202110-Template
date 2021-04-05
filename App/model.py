@@ -47,7 +47,7 @@ los mismos.
 # Construccion de modelos
 
 
-def newdicc(tipo):
+def newdicc(tipo,tipo2):
  
     diccio = {'videos': None,
                'categorias': None,
@@ -57,8 +57,8 @@ def newdicc(tipo):
     diccio['videos'] = lt.newList(tipo)
  
     diccio['categorias'] = mp.newMap(10000,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   maptype=tipo2,
+                                   loadfactor=0.5,
                                    )
 
     return diccio
