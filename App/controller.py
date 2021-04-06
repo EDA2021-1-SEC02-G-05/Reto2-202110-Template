@@ -97,12 +97,11 @@ def loadaddcategoria(diccio):
     delta_time = stop_time - start_time
     delta_memory = deltaMemory(start_memory, stop_memory)
 
-    return delta_time, delta_memory
+    return agustinjulio,delta_time, delta_memory
 
 
 
 
-    return agustinjulio
 
 
 def loadvideosLikes(diccio,numero,categor):
