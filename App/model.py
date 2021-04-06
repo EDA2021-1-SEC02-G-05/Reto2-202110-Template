@@ -61,6 +61,7 @@ def newdicc(tipo,tipo2,num):
                                    loadfactor=num,
                                    )
 
+
     return diccio
 
 
@@ -71,30 +72,33 @@ def addVideo(diccio, video):
     # Se adiciona el video a la lista de videos
     lt.addLast(diccio['videos'], video)
 
+    
+
 
 
 
 def addCategoria(diccio):
 
+    iterador = it.newIterator(diccio["videos"])
 
-    for m in range(0,lt.size(diccio["videos"])):
-        rta=lt.getElement(diccio["videos"],m)
+    while it.hasNext(iterador):
+        actual = it.next(iterador)
+        
+        actual["category_id"]
 
-        rta["category_id"]
 
-
-        if mp.contains(diccio["categorias"],rta["category_id"])== True:
+        if mp.contains(diccio["categorias"],actual["category_id"])== True:
          
-            par = mp.get(diccio['categorias'], rta["category_id"])
+            par = mp.get(diccio['categorias'], actual["category_id"])
             lis = me.getValue(par)
 
-            lt.addLast(lis,rta)
+            lt.addLast(lis,actual)
             mg.sort(lis,cmpbylikes)
         
         else:
             lis = lt.newList()
-            mp.put(diccio['categorias'],rta["category_id"],lis)
-            lt.addLast(lis,rta)
+            mp.put(diccio['categorias'],actual["category_id"],lis)
+            lt.addLast(lis,actual)
 
     return diccio        
 

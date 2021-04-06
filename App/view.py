@@ -87,10 +87,10 @@ while True:
         x2 = str(input("Indique el tipo de map que quiere entre CHAINING y PROBING: "))
         x3 = float(input("Indique el factor de carga deseado : "))
         diccio = initdicci(x,x2,x3)
-        loadData(diccio)
+        answer = controller.loadData(diccio)
         primer= lt.firstElement(diccio["videos"])
         lista=[]
-        answer = controller.loadData(diccio)
+        
         print('Videos cargados: ' + str(lt.size(diccio['videos'])))
         print("el primer video: "+" Titulo : "+str(primer["title"])+" , "+" Nombre del canal:  "+str(primer["channel_title"])+" , "+" Fecha de tendencia: "+str(primer["trending_date"])+" , " +" Pais: "+str(primer["country"])+" , "  + " Vistas: "+str(primer["category_id"])+" , "+"  Me gustas: "+str(primer["likes"])+", "+ "Nomegustas :"+str(primer["dislikes"]))
 
