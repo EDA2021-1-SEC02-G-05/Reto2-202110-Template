@@ -32,11 +32,11 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 
-def initdicci(tipo,tipo2):
+def initdicci(tipo,tipo2,num):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    diccio = model.newdicc(tipo,tipo2)
+    diccio = model.newdicc(tipo,tipo2,num)
     return diccio
 
 # Funciones para la carga de datos
@@ -97,12 +97,12 @@ def loadaddcategoria(diccio):
     delta_time = stop_time - start_time
     delta_memory = deltaMemory(start_memory, stop_memory)
 
-    return delta_time, delta_memory
+    return delta_time, delta_memory , agustinjulio
 
 
 
 
-    return agustinjulio
+   
 
 
 def loadvideosLikes(diccio,numero,categor):

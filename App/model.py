@@ -47,7 +47,7 @@ los mismos.
 # Construccion de modelos
 
 
-def newdicc(tipo,tipo2):
+def newdicc(tipo,tipo2,num):
  
     diccio = {'videos': None,
                'categorias': None,
@@ -58,7 +58,7 @@ def newdicc(tipo,tipo2):
  
     diccio['categorias'] = mp.newMap(10000,
                                    maptype=tipo2,
-                                   loadfactor=0.5,
+                                   loadfactor=num,
                                    )
 
     return diccio
@@ -98,15 +98,6 @@ def addCategoria(diccio):
 
     return diccio        
 
-
-
-
-
-
-
-
-
-
 def videosLikes(diccio,numero,categor):
     categori={"Film & Animation":1,"Autos & Vehicles":2,"Music":10,"Pets & Animals":15,"Sports":17,"Short Movies":18,"Travel & Events":19,"Gaming":20,"Videoblogging":21,"People & Blogs":22,"Comedyy":23,"Entertainment":24,"News & Politics":25,"Howto & Style":26,"Education":27,"Science & Technology":28,"Non-profits & Activism":29,"Movies":30,"Anime/Animation":31,"Classics":33,"Comedy":34,"Documentary":35,"Drama":36,"Family":37,"Foreign":38,"Horror":39,"Sci-Fi/Fantasy":40,"Thriller":41,"Shorts":42,"Shows":43,"Trailers":44}
     lol=categori[categor]
@@ -128,7 +119,7 @@ def videosLikes(diccio,numero,categor):
         
 
     
-##
+
     
 
     

@@ -53,11 +53,11 @@ def printMenu():
     print("8- Consultar los videos por un tag")
     print("0- Salir")
 
-def initdicci(tipo,tipo2):
+def initdicci(tipo,tipo2,num):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initdicci(tipo,tipo2)
+    return controller.initdicci(tipo,tipo2,num)
 
 def loadData(diccio):
     """
@@ -85,7 +85,8 @@ while True:
 
         x = str(input("Indique el tipo de lista que quiere entre ARRAY_LIST o SINGLE_LINKED: "))
         x2 = str(input("Indique el tipo de map que quiere entre CHAINING y PROBING: "))
-        diccio = initdicci(x,x2)
+        x3 = float(input("Indique el factor de carga deseado : "))
+        diccio = initdicci(x,x2,x3)
         loadData(diccio)
         primer= lt.firstElement(diccio["videos"])
         lista=[]
@@ -96,12 +97,8 @@ while True:
         print("Tiempo [ms]: ", f"{answer[0]:.3f}", " || ",
         "Memoria [kB]: ", f"{answer[1]:.3f}")
 
-
-
     elif int(inputs[0]) == 2:   
-
-        x = str(input("Indique el tipo de lista que quiere: "))
-        pepe=loadaddcategoria(diccio)
+        
         answer = controller.loadaddcategoria(diccio)
 
         print("Tiempo [ms]: ", f"{answer[0]:.3f}", " || ",
