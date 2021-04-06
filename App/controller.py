@@ -100,11 +100,6 @@ def loadaddcategoria(diccio):
     return delta_time, delta_memory , agustinjulio
 
 
-
-
-   
-
-
 def loadvideosLikes(diccio,numero,categor):
 
     omarperez=model.videosLikes(diccio,numero,categor)
