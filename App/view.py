@@ -114,12 +114,6 @@ while True:
 
         print(jes)
 
-
-    
-
-
-        
-
     else:
         sys.exit(0)
 

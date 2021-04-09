@@ -54,6 +54,7 @@ def loadData(diccio):
     start_memory = getMemory()
 
     loadVideos(diccio)
+    loadCategorias(diccio)
     
     stop_memory = getMemory()
     stop_time = getTime()
@@ -74,6 +75,23 @@ def loadVideos(diccio):
     input_file = csv.DictReader(open(videofile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(diccio, video)
+
+def loadCategorias(diccio):
+    """
+    Carga los libros del archivo.  Por cada libro se toman sus autores y por
+    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
+    referencia al libro que se esta procesando.
+    """
+    dialect = csv.excel()
+    dialect.delimiter = "\t"
+    catfile = cf.data_dir + 'category-id.csv'
+    input_file = csv.DictReader(open(catfile,encoding='utf-8'),dialect=dialect)
+    for cat in input_file:
+        print(cat)
+        model.addCategoria(diccio, cat)
+        
+
+    print(diccio["category"])
    
 
 # Funciones de consulta sobre el catálogo
@@ -88,7 +106,7 @@ def loadaddcategoria(diccio):
     start_memory = getMemory()
 
 
-    agustinjulio=model.addCategoria(diccio)
+    agustinjulio=model.addCategory(diccio)
 
     stop_memory = getMemory()
     stop_time = getTime()
@@ -96,6 +114,8 @@ def loadaddcategoria(diccio):
 
     delta_time = stop_time - start_time
     delta_memory = deltaMemory(start_memory, stop_memory)
+
+    print(agustinjulio)
 
     return delta_time, delta_memory , agustinjulio
 

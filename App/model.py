@@ -55,11 +55,16 @@ def newdicc(tipo,tipo2,num):
 
 
     diccio['videos'] = lt.newList(tipo)
- 
-    diccio['categorias'] = mp.newMap(10000,
+
+    diccio['category'] = mp.newMap(100,
                                    maptype=tipo2,
                                    loadfactor=num,
-                                   )
+                                   comparefunction=cmpbyId)
+ 
+    diccio['categorias'] = mp.newMap(100,
+                                   maptype=tipo2,
+                                   loadfactor=num,
+                                   comparefunction=cmpbyId2)
 
 
     return diccio
@@ -71,13 +76,12 @@ def newdicc(tipo,tipo2,num):
 def addVideo(diccio, video):
     # Se adiciona el video a la lista de videos
     lt.addLast(diccio['videos'], video)
+def addCategoria(diccio, cat):
+    # Se adiciona la categoria a la lista de categorias
 
-    
-
-
-
-
-def addCategoria(diccio):
+    mp.put(diccio["category"],cat["id"],cat["name"])
+        
+def addCategory(diccio):
 
     iterador = it.newIterator(diccio["videos"])
 
@@ -87,7 +91,7 @@ def addCategoria(diccio):
         actual["category_id"]
 
 
-        if mp.contains(diccio["categorias"],actual["category_id"])== True:
+        if mp.contains(diccio["categorias"],actual["category_id"])==True:
          
             par = mp.get(diccio['categorias'], actual["category_id"])
             lis = me.getValue(par)
@@ -122,26 +126,6 @@ def videosLikes(diccio,numero,categor):
     return lola
         
 
-    
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-# Funciones para creacion de datos
-
-
 # Funciones utilizadas para comparar elementos dentro de una lista
    
 
@@ -161,6 +145,27 @@ def cmpbylikes(lili1,lili2):
 
     return(float(lili1["likes"])>float(lili2["likes"]))
 
+def cmpbyId(id1,id2):
+
+    ID2 = me.getKey(id2)
+
+    if int(id1) == int(ID2):
+        return 0
+    elif int(id1) > int(ID2):
+        return 1
+    else:
+        return -1
+
+def cmpbyId2(id1,id2):
+
+    ID2 = me.getKey(id2)
+
+    if id1 == ID2:
+        return 0
+    elif id1 > ID2:
+        return 1
+    else:
+        return -1
 
 # Funciones de ordenamiento
 
