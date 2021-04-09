@@ -71,7 +71,7 @@ def loadVideos(diccio):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    videofile = cf.data_dir + 'videos-small.csv'
+    videofile = cf.data_dir + 'videos-large.csv'
     input_file = csv.DictReader(open(videofile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(diccio, video)
@@ -87,12 +87,9 @@ def loadCategorias(diccio):
     catfile = cf.data_dir + 'category-id.csv'
     input_file = csv.DictReader(open(catfile,encoding='utf-8'),dialect=dialect)
     for cat in input_file:
-        print(cat)
         model.addCategoria(diccio, cat)
         
 
-    print(diccio["category"])
-   
 
 # Funciones de consulta sobre el catálogo
 
@@ -115,7 +112,6 @@ def loadaddcategoria(diccio):
     delta_time = stop_time - start_time
     delta_memory = deltaMemory(start_memory, stop_memory)
 
-    print(agustinjulio)
 
     return delta_time, delta_memory , agustinjulio
 

@@ -79,7 +79,7 @@ def addVideo(diccio, video):
 def addCategoria(diccio, cat):
     # Se adiciona la categoria a la lista de categorias
 
-    mp.put(diccio["category"],cat["id"],cat["name"])
+    mp.put(diccio["category"],cat["name"],cat["id"])
         
 def addCategory(diccio):
 
@@ -87,9 +87,6 @@ def addCategory(diccio):
 
     while it.hasNext(iterador):
         actual = it.next(iterador)
-        
-        actual["category_id"]
-
 
         if mp.contains(diccio["categorias"],actual["category_id"])==True:
          
@@ -97,7 +94,6 @@ def addCategory(diccio):
             lis = me.getValue(par)
 
             lt.addLast(lis,actual)
-            mg.sort(lis,cmpbylikes)
         
         else:
             lis = lt.newList()
@@ -128,6 +124,12 @@ def videosLikes(diccio,numero,categor):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
    
+
+
+
+def requerimiento3(diccio,categoria)
+
+    
 
 def cmpVideosByViews(video1, video2):
 
