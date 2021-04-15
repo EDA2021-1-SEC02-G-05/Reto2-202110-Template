@@ -72,7 +72,7 @@ def loadVideos(diccio):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
-    videofile = cf.data_dir + 'videos-large.csv'
+    videofile = cf.data_dir + 'videos-small.csv'
     input_file = csv.DictReader(open(videofile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(diccio, video)
@@ -120,7 +120,7 @@ def loadCategorias(diccio):
     catfile = cf.data_dir + 'category-id.csv'
     input_file = csv.DictReader(open(catfile,encoding='utf-8'),dialect=dialect)
     for cat in input_file:
-        model.addCategoria(diccio, cat)
+        model.addCategorias(diccio, cat)
         print(cat)
 
 def loadvideosLikes(diccio,numero,categor):
@@ -160,10 +160,23 @@ def deltaMemory(start_memory, stop_memory):
     return delta_memory
 
 def loadpaises(diccio,pais,categoriaa,numero):
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
 
     gerardopeluso=model.paises(diccio,pais,categoriaa,numero)
 
-    return gerardopeluso
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return gerardopeluso,delta_time, delta_memory
 
 
 def loadPais(diccio):
@@ -174,23 +187,62 @@ def loadPais(diccio):
 
 
 def loadrequerimiento2(diccio,pais):
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
 
     trenvalencia=model.requerimiento2(diccio,pais)
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
 
-    return trenvalencia
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return trenvalencia,delta_time, delta_memory
 
 
 def loadrequerimiento3(diccio,categoria):
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
 
     nani=model.requerimiento3(diccio,categoria)
 
-    return nani
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return nani,delta_time, delta_memory
 
 
 def loadrequerimiento4(diccio,country,numero,tag):
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+
     paul=model.requerimiento4(diccio,country,numero,tag)
 
-    return paul
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return paul,delta_time, delta_memory
 
 
     

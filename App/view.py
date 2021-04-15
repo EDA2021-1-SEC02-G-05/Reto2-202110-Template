@@ -152,6 +152,8 @@ while True:
 
 
         badbunny=loaddpaises(diccio,pais,categoriaa,numero)
+        print("Tiempo [ms]: ", f"{badbunny[1]:.3f}", " || ",
+        "Memoria [kB]: ", f"{badbunny[2]:.3f}")
 
         print(badbunny)
 
@@ -161,14 +163,19 @@ while True:
 
 
         benzema =loaddrequerimiento2(diccio,pais)
+        
 
         print(benzema)
+        print("Tiempo [ms]: ", f"{benzema[1]:.3f}", " || ",
+        "Memoria [kB]: ", f"{benzema[2]:.3f}")
 
     elif int(inputs[0]) == 6:
 
         categoria=str(input(" Ingrese el nombre de la categoria de su interes: "))
 
         celjas=loaddrequerimiento3(diccio,categoria)
+        print("Tiempo [ms]: ", f"{celjas[1]:.3f}", " || ",
+        "Memoria [kB]: ", f"{celjas[2]:.3f}")
 
 
         print(celjas)
@@ -186,6 +193,8 @@ while True:
 
 
         ramiro=loaddrequerimiento4(diccio,country,numero,tag)
+        print("Tiempo [ms]: ", f"{ramiro[1]:.3f}", " || ",
+        "Memoria [kB]: ", f"{ramiro[2]:.3f}")
 
         print(ramiro)
 
