@@ -47,7 +47,7 @@ los mismos.
 # Construccion de modelos
 
 
-def newdicc(tipo):
+def newdicc(tipo,tipo2,num):
  
     diccio = {'videos': None,
                'categorias': None,
@@ -56,10 +56,26 @@ def newdicc(tipo):
 
     diccio['videos'] = lt.newList(tipo)
  
-    diccio['categorias'] = mp.newMap(10000,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
+    diccio['categorias'] = mp.newMap(100,
+                                   maptype=tipo2,
+                                   loadfactor=num,
+                                    )
+
+    diccio["paises"]= mp.newMap(100,
+                                   maptype=tipo2,
+                                   loadfactor=num
                                    )
+    diccio['category']= mp.newMap(100,
+                                   maptype=tipo2,
+                                   loadfactor=num,
+                                   comparefunction=cmpbyId)
+    diccio['trending']= mp.newMap(100,
+                                   maptype=tipo2,
+                                   loadfactor=num,
+                                   comparefunction=cmpbyId)
+
+
+ 
 
     return diccio
 
@@ -71,42 +87,77 @@ def addVideo(diccio, video):
     # Se adiciona el video a la lista de videos
     lt.addLast(diccio['videos'], video)
 
+def addCategoria(diccio, cat):
+    # Se adiciona la categoria a la lista de categorias
+
+    mp.put(diccio["category"],cat["name"],cat["id"])
+
+
+def organizartags(diccio):
+    pala=""
+    lista=[]
+    ll=[]
+    
+    for i in range(0,lt.size(diccio["videos"])):
+
+        rta=lt.getElement(diccio["videos"],i) 
+
+        for mm in rta["tags"]:
+
+            if mm != "|"and  mm!='"':
+
+                pala+=mm
+            else:
+                lista.append(pala)
+                pala=""
+
+        for pp in lista:
+
+             if pp !='':
+
+        
+                 ll.append(pp)
+
+
+        
+        rta["tags"]=ll
+        ll=[]
+
+      
+    return diccio
 
 
 
-def addCategoria(diccio):
 
 
-    for m in range(0,lt.size(diccio["videos"])):
-        rta=lt.getElement(diccio["videos"],m)
 
-        rta["category_id"]
+def addCategoriaa(diccio):
+
+    iterador = it.newIterator(diccio["videos"])
+
+    while it.hasNext(iterador):
+        actual = it.next(iterador)
+        
+        actual["category_id"]
 
 
-        if mp.contains(diccio["categorias"],rta["category_id"])== True:
+        if mp.contains(diccio["categorias"],actual["category_id"])== True:
          
-            par = mp.get(diccio['categorias'], rta["category_id"])
+            par = mp.get(diccio['categorias'], actual["category_id"])
             lis = me.getValue(par)
 
-            lt.addLast(lis,rta)
-            mg.sort(lis,cmpbylikes)
+            lt.addLast(lis,actual)
         
         else:
             lis = lt.newList()
-            mp.put(diccio['categorias'],rta["category_id"],lis)
-            lt.addLast(lis,rta)
+            mp.put(diccio['categorias'],actual["category_id"],lis)
+            lt.addLast(lis,actual)
 
     return diccio        
 
 
 
-
-
-
-
-
-
-
+#arreglar
 def videosLikes(diccio,numero,categor):
     categori={"Film & Animation":1,"Autos & Vehicles":2,"Music":10,"Pets & Animals":15,"Sports":17,"Short Movies":18,"Travel & Events":19,"Gaming":20,"Videoblogging":21,"People & Blogs":22,"Comedyy":23,"Entertainment":24,"News & Politics":25,"Howto & Style":26,"Education":27,"Science & Technology":28,"Non-profits & Activism":29,"Movies":30,"Anime/Animation":31,"Classics":33,"Comedy":34,"Documentary":35,"Drama":36,"Family":37,"Foreign":38,"Horror":39,"Sci-Fi/Fantasy":40,"Thriller":41,"Shorts":42,"Shows":43,"Trailers":44}
     lol=categori[categor]
@@ -116,6 +167,8 @@ def videosLikes(diccio,numero,categor):
     
     par = mp.get(diccio['categorias'],str(lol))
     lis = me.getValue(par)
+    lis=mg.sort(lis,cmpbylikes)
+
 
     for i in range(numero):
 
@@ -124,11 +177,12 @@ def videosLikes(diccio,numero,categor):
 
         lola.append(tt)
 
+
     return lola
         
 
     
-##
+
     
 
     
@@ -166,6 +220,29 @@ def cmpbylikes(lili1,lili2):
 
     return(float(lili1["likes"])>float(lili2["likes"]))
 
+def cmpbyId(id1,id2):
+
+    ID2 = me.getKey(id2)
+
+    if id1 == ID2:
+        return 0
+    elif id1 > ID2:
+        return 1
+    else:
+        return -1
+
+def cmpbyId2(id1,id2):
+
+    ID2 = me.getKey(id2)
+
+    if int(id1) == int(ID2):
+        return 0
+    elif int(id1) > int(ID2):
+        return 1
+    else:
+        return -1
+
+
 
 # Funciones de ordenamiento
 
@@ -195,24 +272,234 @@ def Ordenamientos(tipo,dicci,size):
 
 
 # Funciones de consulta
+
+
+
+
+ 
   
-def paises(dicci):
+def paises(diccio,pais,categoriaa,numero):
+    categori={"Film & Animation":1,"Autos & Vehicles":2,"Music":10,"Pets & Animals":15,"Sports":17,"Short Movies":18,"Travel & Events":19,"Gaming":20,"Videoblogging":21,"People & Blogs":22,"Comedyy":23,"Entertainment":24,"News & Politics":25,"Howto & Style":26,"Education":27,"Science & Technology":28,"Non-profits & Activism":29,"Movies":30,"Anime/Animation":31,"Classics":33,"Comedy":34,"Documentary":35,"Drama":36,"Family":37,"Foreign":38,"Horror":39,"Sci-Fi/Fantasy":40,"Thriller":41,"Shorts":42,"Shows":43,"Trailers":44}
+    categoriaa=str(categori[categoriaa])
 
-    pass
+
+    par = mp.get(diccio['categorias'],str(categoriaa))
+    lis = me.getValue(par)
+    lis=mg.sort(lis,cmpPaisesbyviews)
+
+    iterador = it.newIterator(lis)
+
+    while it.hasNext(iterador):
+
+        actual = it.next(iterador)
+        
+        if actual["country"]== pais:
+            listt = lt.newList()
+            mp.put(diccio['paises'],actual["country"],listt)
+            lt.addLast(listt,actual)
+
+    parra = mp.get(diccio['paises'],pais)
+    toloza = me.getValue(parra)
+
+    chicharo=[]
 
 
-def requerimiento1(dicci,ppais:str,categorias:str,cantidad:int):
-    pass
+    iteradorr = it.newIterator(toloza)
+
+
+    while it.hasNext(iteradorr):
+        acto = it.next(iteradorr)
+
+        chicharo.append(acto)
+
+    chicharo=chicharo[:numero]
+
+    return chicharo
+
+
+def addPais(diccio):
+
+    iterador = it.newIterator(diccio["videos"])
+
+    while it.hasNext(iterador):
+
+        actual = it.next(iterador)
+        if mp.contains(diccio["trending"],actual["country"])==True:
+
+            par = mp.get(diccio['trending'], actual["country"])
+            lis = me.getValue(par)
+
+            lt.addLast(lis,actual)
+
+        else:
+            lis = lt.newList()
+            mp.put(diccio['trending'],actual["country"],lis)
+            lt.addLast(lis,actual)
+
+    return diccio 
+
+
+def requerimiento2(diccio,pais:str):
+
+    diccionario = {}
+
+    par = mp.get(diccio['trending'], pais)
+    lis = me.getValue(par)
+
+    iterador = it.newIterator(lis)
+
+    while it.hasNext(iterador):
+
+        actual = it.next(iterador)
+
+        if actual["title"] in diccionario:
+            diccionario[actual["title"]][0]+=1
+
+        else:
+            diccionario[actual["title"]]=[1,(actual)]
+
+    numero = 0
+
+    for i in diccionario:
+        if diccionario[i][0] > numero:
+            numero= diccionario[i][0]
+            tt=(("El titulo del video : "+str(diccionario[i][1]["title"])," El nombre del canal: "+str(diccionario[i][1]["channel_title"]),"el category id: "+str(diccionario[i][1]["category_id"]),"los dias que ha sido trending: "+str(diccionario[i][0])))
+
+
+
+    return tt
+
+
+
+
+
+
+def  requerimiento3(diccio,categoria):
+    categori={"Film & Animation":1,"Autos & Vehicles":2,"Music":10,"Pets & Animals":15,"Sports":17,"Short Movies":18,"Travel & Events":19,"Gaming":20,"Videoblogging":21,"People & Blogs":22,"Comedyy":23,"Entertainment":24,"News & Politics":25,"Howto & Style":26,"Education":27,"Science & Technology":28,"Non-profits & Activism":29,"Movies":30,"Anime/Animation":31,"Classics":33,"Comedy":34,"Documentary":35,"Drama":36,"Family":37,"Foreign":38,"Horror":39,"Sci-Fi/Fantasy":40,"Thriller":41,"Shorts":42,"Shows":43,"Trailers":44}
+    categoria=str(categori[categoria])
+
+    diccionario={}
+
+
+    par = mp.get(diccio['categorias'], categoria)
+    lis = me.getValue(par)
+
+    iterador = it.newIterator(lis)
+
+    while it.hasNext(iterador):
+
+        actual = it.next(iterador)
+
+        if actual["title"] in diccionario:
+            diccionario[actual["title"]][0]+=1
+
+        else:
+            diccionario[actual["title"]]=[1,(actual)]
+
+    numero = 0
+
+    for i in diccionario:
+        if diccionario[i][0] > numero:
+            numero= diccionario[i][0]
+            tto=(("El titulo del video : "+str(diccionario[i][1]["title"])," El nombre del canal: "+str(diccionario[i][1]["channel_title"]),"el category id: "+str(diccionario[i][1]["category_id"]),"los dias que ha sido trending: "+str(diccionario[i][0])))
+
+    return tto
+
+
+def requerimiento4(diccio,country,numero,tag ):
+    lastima=[]
+
+
+    par = mp.get(diccio['trending'], str(country))
+    lis = me.getValue(par)
+    lis=mg.sort(lis,cmpbylikes)
+
+
+
+    iterador = it.newIterator(lis)
+
+    while it.hasNext(iterador):
+
+        tt = it.next(iterador)
+
+
+        if tag in tt["tags"]:
+
+
+            lastima.append(("titulo: "+str(tt["title"])," Nombre del canal: "+str(tt["channel_title"])," Fecha de publicacion: "+str(tt["publish_time"])," Visitas: "+str(tt["views"])," Me gustas"+str(tt["likes"]),"No me gustas: "+str(tt["dislikes"])))
+
+
+
+    lastima=lastima[:numero]
+            
+    return lastima
+
+
+
+
+
+
+
+
+
+
     
-def TrendingVideo(dicci,pais:str):
 
-    pass  
 
-def requerimiento3(dicci,categorii:str):
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
 
     pass
-def organizartags(dicci):
 
-    pass
-def requerimiento4(dicci,tag:str,numero:int):
-    pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

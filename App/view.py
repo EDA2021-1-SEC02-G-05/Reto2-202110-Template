@@ -30,6 +30,10 @@ from DISClib.DataStructures import mapentry as me
 assert cf
 import sys
 
+
+assert cf
+import sys
+
 default_limit = 1000
 sys.setrecursionlimit(default_limit*100) 
 
@@ -44,20 +48,19 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Indicar el tipo de ordenamiento")
-    print("3- Organice los videos por paises")
-    print("4- Consultar los videos mas vistas  por pais")
-    print("5- Consultar los videos con mas trending")
+    print("2-  Organizar los videos por categorias")
+    print("3- videos con mas likes ")
+    print("4- Consultar los videos con mas tendencia por catehoria de un pais ")
+    print("5- Consultar el video mas trending por pais ")
     print("6- Consultar el video mas trending por categoria")
-    print("7- Organizar los videos con sus tags")
-    print("8- Consultar los videos por un tag")
+    print("7- los video con mas likes en un pais con un cierto tag")
     print("0- Salir")
 
-def initdicci(tipo):
+def initdicci(tipo,tipo2,num):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initdicci(tipo)
+    return controller.initdicci(tipo,tipo2,num)
 
 def loadData(diccio):
     """
@@ -73,6 +76,31 @@ def loaddloadvideosLikes(diccio,numero,categor):
 
     return controller.loadvideosLikes(diccio,numero,categor)
 
+def loaddpaises(diccio,pais,categoriaa,numero):
+
+    return controller.loadpaises(diccio,pais,categoriaa,numero)
+
+def loadPaises(diccio):
+
+    return controller.loadPais(diccio)
+
+def loaddorganizartags(diccio):
+
+    return controller.loadorganizartags(diccio)
+
+
+def loaddrequerimiento2(diccio,pais):
+
+    return controller.loadrequerimiento2(diccio,pais)
+
+
+def loaddrequerimiento3(diccio,categoria):
+
+    return controller.loadrequerimiento3(diccio,categoria)
+
+def loaddrequerimiento4(diccio,country,numero,tag):
+    return controller.loadrequerimiento4(diccio,country,numero,tag)
+
 diccio = None
 """
 Menu principal
@@ -83,19 +111,29 @@ while True:
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
 
-        x = str(input("Indique el tipo de lista que quiere: "))
-        diccio = initdicci(x)
-        loadData(diccio)
+        x = str(input("Indique el tipo de lista que quiere entre ARRAY_LIST o SINGLE_LINKED: "))
+        x2 = str(input("Indique el tipo de map que quiere entre CHAINING y PROBING: "))
+        x3 = float(input("Indique el factor de carga deseado : "))
+        diccio = initdicci(x,x2,x3)
+        answer = controller.loadData(diccio)
+        tutu=loaddorganizartags(diccio)
+        so=controller.loadPais(diccio)
+
         primer= lt.firstElement(diccio["videos"])
         lista=[]
+        
         print('Videos cargados: ' + str(lt.size(diccio['videos'])))
-    
-        print("el primer video: "+" Titulo : "+str(primer["title"])+" , "+" Nombre del canal:  "+str(primer["channel_title"])+" , "+" Fecha de tendencia: "+str(primer["trending_date"])+" , " +" Pais: "+str(primer["country"])+" , "  + " Vistas: "+str(primer["category_id"])+" , "+"  Me gustas: "+str(primer["likes"])+", "+ "Nomegustas :"+str(primer["dislikes"]))
+        print("el primer video: "+" Titulo : "+str(primer["title"])+" , "+" Nombre del canal:  "+str(primer["channel_title"])+" , "+" Fecha de tendencia: "+str(primer["trending_date"])+" , " +" Pais: "+str(primer["country"])+" , "  + " Vistas: "+str(primer["category_id"])+" , "+"  Me gustas: "+str(primer["likes"])+", "+ "Nomegustas :"+str(primer["category_id"]))
 
+        print("Tiempo [ms]: ", f"{answer[0]:.3f}", " || ",
+        "Memoria [kB]: ", f"{answer[1]:.3f}")
 
     elif int(inputs[0]) == 2:   
+        
+        answer = controller.loadaddcategoria(diccio)
 
-        pepe=loadaddcategoria(diccio)
+        print("Tiempo [ms]: ", f"{answer[0]:.3f}", " || ",
+        "Memoria [kB]: ", f"{answer[1]:.3f}")
 
         print(" Se han organizado los videos por categorias ")
 
@@ -107,11 +145,60 @@ while True:
 
         print(jes)
 
+    elif  int(inputs[0]) == 4:  
+        pais=str(input(" Ingrese el nombre del pais de su interes: "))
+        categoriaa=str(input(" Ingrese el nombre de la categoria de su interes: "))
+        numero=int(input( " Ingrese el numero de videos el cual esta interesado: "))
+
+
+        badbunny=loaddpaises(diccio,pais,categoriaa,numero)
+
+        print(badbunny)
+
+    elif int(inputs[0]) == 5:
+
+        pais=str(input(" Ingrese el nombre del pais que esta interesado:  "))
+
+
+        benzema =loaddrequerimiento2(diccio,pais)
+
+        print(benzema)
+
+    elif int(inputs[0]) == 6:
+
+        categoria=str(input(" Ingrese el nombre de la categoria de su interes: "))
+
+        celjas=loaddrequerimiento3(diccio,categoria)
+
+
+        print(celjas)
+
+
+    elif int(inputs[0]) == 7:
+
+
+
+        country=str(input(" Ingrese el nombre de la pais de su interes: "))
+        tag=str(input( " Ingrese  el tag que esta interesado en buscar:  "))
+        numero=int(input(" Ingrese el numero de videos que quiere ver : "))
+
+
+
+
+        ramiro=loaddrequerimiento4(diccio,country,numero,tag)
+
+        print(ramiro)
+
+
+
+
 
     
 
 
-        
+
+       
+  
 
     else:
         sys.exit(0)
