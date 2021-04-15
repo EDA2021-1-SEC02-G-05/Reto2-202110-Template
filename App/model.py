@@ -55,6 +55,11 @@ def newdicc(tipo,tipo2,num):
 
 
     diccio['videos'] = lt.newList(tipo)
+
+    diccio['category'] = mp.newMap(100,
+                                   maptype=tipo2,
+                                   loadfactor=num,
+                                   comparefunction=cmpbyId)
  
     diccio['categorias'] = mp.newMap(100,
                                    maptype=tipo2,
@@ -86,12 +91,16 @@ def newdicc(tipo,tipo2,num):
 def addVideo(diccio, video):
     # Se adiciona el video a la lista de videos
     lt.addLast(diccio['videos'], video)
+def addCategoria(diccio, cat):
+    # Se adiciona la categoria a la lista de categorias
 
 def addCategoria(diccio, cat):
     # Se adiciona la categoria a la lista de categorias
 
     mp.put(diccio["category"],cat["name"],cat["id"])
 
+    while it.hasNext(iterador):
+        actual = it.next(iterador)
 
 def organizartags(diccio):
     pala=""
@@ -198,11 +207,10 @@ def videosLikes(diccio,numero,categor):
 
 
 
-# Funciones para creacion de datos
 
+def requerimiento3(diccio,categoria)
 
-# Funciones utilizadas para comparar elementos dentro de una lista
-   
+    
 
 def cmpVideosByViews(video1, video2):
 
